@@ -1,0 +1,35 @@
+echo "# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pidb
+*.log
+*.vs/
+.vs/
+*.exe
+*.dll
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+*.staticwebassets.*
+compressed/
+
+# User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/" > .gitignore

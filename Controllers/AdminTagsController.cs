@@ -23,6 +23,7 @@ namespace Blogy_MVC.Controllers
 
        //Mapping the AddTagRequest(The ViewModels ) that used form data binding to the Domain Model(the real one)
        [HttpPost]
+       [ActionName("Add")]
         public IActionResult Add(AddTagRequest addTagRequest)
         {
          var tag = new Tag
@@ -34,11 +35,11 @@ namespace Blogy_MVC.Controllers
         _blogyDbContext.Tags.Add(tag);
         _blogyDbContext.SaveChanges();
 
-            return View("Add");
-
+            return Redirect("List");
         }
 
         [HttpGet]
+        [ActionName("List")]
         public IActionResult List()
         {
          var tags = _blogyDbContext.Tags.ToList();

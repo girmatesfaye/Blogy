@@ -1,0 +1,19 @@
+root = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+charset = utf-8
+insert_final_newline = true
+
+[*.cshtml]
+indent_style = space
+indent_size = 4
+charset = utf-8
+insert_final_newline = true
+
+[*.razor]
+indent_style = space
+indent_size = 4
+charset = utf-8
+insert_final_newline = true

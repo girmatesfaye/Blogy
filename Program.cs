@@ -1,7 +1,13 @@
+using Blogy_MVC.Data;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<BlogyDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BlogyDbConnectionStrings"))
+);
 
 var app = builder.Build();
 

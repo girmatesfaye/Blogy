@@ -90,5 +90,23 @@ namespace Blogy_MVC.Controllers
               return RedirectToAction("Edit", new { id = editTagRequest.Id });
            }  
         }
-}
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult Delete(EditTagRequest editTagRequest)
+        {
+            var tag = _blogyDbContext.Tags.Find(editTagRequest.Id);
+            if (tag != null)
+            {
+                _blogyDbContext.Tags.Remove(tag);
+                _blogyDbContext.SaveChanges();
+            //show success message
+            return RedirectToAction("List");
+            }
+            
+            //show error message    
+           return RedirectToAction("List");
+
+        }
+    }
 }

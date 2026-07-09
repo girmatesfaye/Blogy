@@ -20,5 +20,11 @@
         <label class="form-label">Display Name</label>
         <input type="text" class="form-control" id="displayName" asp-for="DisplayName">
     </div>
-    <button type="submit" class="btn btn-secondary">Update</button>
+
+    <div class="flex gap-2">
+        <button type="submit" class="btn btn-secondary">Update</button>
+        <button type="submit" class="btn btn-danger" asp-controller="AdminTags" asp-action="Delete">
+            Delete
+        </button>
+    </div>
 </form>

@@ -18,22 +18,27 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var tag in Model)
-                {
+                @foreach(var tag in Model)
+            {
                     <tr>
-                        <td> @tag.Id </td>
-                        <td> @tag.Name </td>
-                        <td> @tag.DisplayName </td>
+                        <td > @tag.Id </td>
+                        <td > @tag.Name </td>
+                        <td > @tag.DisplayName </td>
                         <td>
-                            <a asp-area=" " asp-controller="AdminTags" asp-action="Edit" asp-route-id="@tag.Id">Edit</a>
+                          <a asp-area=" " asp-controller="AdminTags" asp-action="Edit" asp-route-id = "@tag.Id">Edit</a>
                         </td>
                     </tr>
+            
                 }
             </tbody>
         </table>
     }
     else
-    {
-        <p>No tags found.</p>
-    }
+
+
+{
+<p>No tags found.</p>
+
+
+}
 </div>

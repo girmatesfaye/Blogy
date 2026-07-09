@@ -46,5 +46,70 @@ namespace Blogy_MVC.Controllers
             return View(tags);
 
         }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var tag = _blogyDbContext.Tags.FirstOrDefault(x => x.Id == id);
+            if (tag != null)
+            {
+                var editTagRequest = new EditTagRequest
+                {
+                    Id = tag.Id,
+                    Name = tag.Name,
+                    DisplayName = tag.DisplayName
+                };
+                return View(editTagRequest);
+            }
+            return RedirectToAction("List");
+        }
+        [HttpPost]
+        [ActionName("Edit")]
+        public IActionResult Edit(EditTagRequest editTagRequest)
+        {
+            var tag = new Tag
+            {
+                Id = editTagRequest.Id,
+                Name = editTagRequest.Name,
+                DisplayName = editTagRequest.DisplayName
+            };
+
+
+            var existingTag = _blogyDbContext.Tags.Find(tag.Id);
+            if (existingTag != null)
+            {
+                existingTag.Name = tag.Name;
+                existingTag.DisplayName = tag.DisplayName;
+
+                // Save the changes
+                _blogyDbContext.SaveChanges();
+                return RedirectToAction("Edit", new { id = editTagRequest.Id });
+
+            } else
+            {
+                return NotFound();
+            }
+
+    // Without mapping the EditTagRequest to the Domain Model, we can directly use the EditTagRequest to update the existing tag in the database. Here's how you can do it:
+   /*     public IActionResult Edit(EditTagRequest editTagRequest)
+        {
+            var existingTag = _blogyDbContext.Tags.Find(editTagRequest.Id);
+            if (existingTag != null)
+            {
+                existingTag.Name = editTagRequest.Name;
+                existingTag.DisplayName = editTagRequest.DisplayName;
+
+                // Save the changes
+                _blogyDbContext.SaveChanges();
+                return RedirectToAction("Edit", new { id = editTagRequest.Id });
+            }
+            else
+            {
+                return RedirectToAction("Edit", new { id = editTagRequest.Id });
+            }
+        }
+     
     }
+    */ 
+}
 }

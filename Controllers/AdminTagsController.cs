@@ -73,8 +73,6 @@ namespace Blogy_MVC.Controllers
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
-
-
             var existingTag = _blogyDbContext.Tags.Find(tag.Id);
             if (existingTag != null)
             {
@@ -83,33 +81,14 @@ namespace Blogy_MVC.Controllers
 
                 // Save the changes
                 _blogyDbContext.SaveChanges();
-                return RedirectToAction("Edit", new { id = editTagRequest.Id });
 
-            } else
-            {
-                return NotFound();
-            }
-
-    // Without mapping the EditTagRequest to the Domain Model, we can directly use the EditTagRequest to update the existing tag in the database. Here's how you can do it:
-   /*     public IActionResult Edit(EditTagRequest editTagRequest)
-        {
-            var existingTag = _blogyDbContext.Tags.Find(editTagRequest.Id);
-            if (existingTag != null)
-            {
-                existingTag.Name = editTagRequest.Name;
-                existingTag.DisplayName = editTagRequest.DisplayName;
-
-                // Save the changes
-                _blogyDbContext.SaveChanges();
+                //Show Success Message
                 return RedirectToAction("Edit", new { id = editTagRequest.Id });
-            }
-            else
+            }else
             {
-                return RedirectToAction("Edit", new { id = editTagRequest.Id });
-            }
+            //Show Error Message
+              return RedirectToAction("Edit", new { id = editTagRequest.Id });
+           }  
         }
-     
-    }
-    */ 
 }
 }

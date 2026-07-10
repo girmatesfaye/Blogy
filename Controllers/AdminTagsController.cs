@@ -2,17 +2,18 @@
 using Blogy_MVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Blogy_MVC.Data;
-
+using Microsoft.EntityFrameworkCore;
 using Blogy_MVC.Models.Domain;
+using Blogy_MVC.Repository;
 
 namespace Blogy_MVC.Controllers
 {
    public class AdminTagsController : Controller
     {
-       private readonly BlogyDbContext _blogyDbContext;
-       public AdminTagsController(BlogyDbContext blogyDbContext)
+       private readonly ITagRepository _tagRepository;
+       public AdminTagsController(ITagRepository tagRepository)
         {
-            _blogyDbContext = blogyDbContext;
+            _tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -24,33 +25,32 @@ namespace Blogy_MVC.Controllers
        //Mapping the AddTagRequest(The ViewModels ) that used form data binding to the Domain Model(the real one)
        [HttpPost]
        [ActionName("Add")]
-        public IActionResult Add(AddTagRequest addTagRequest)
+        public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
          var tag = new Tag
          {
              Name = addTagRequest.Name,
              DisplayName = addTagRequest.DisplayName
          };
-
-        _blogyDbContext.Tags.Add(tag);
-        _blogyDbContext.SaveChanges();
-
+            await _tagRepository.AddAsync(tag);
             return Redirect("List");
         }
 
         [HttpGet]
         [ActionName("List")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-         var tags = _blogyDbContext.Tags.ToList();
-            return View(tags);
+            //use db context to get all tags from database
+         var tags = await _tagRepository.GetAllAsync();
+
+         return View(tags);
 
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = _blogyDbContext.Tags.FirstOrDefault(x => x.Id == id);
+            var tag = await _tagRepository.GetAsync(id);
             if (tag != null)
             {
                 var editTagRequest = new EditTagRequest
@@ -65,7 +65,7 @@ namespace Blogy_MVC.Controllers
         }
         [HttpPost]
         [ActionName("Edit")]
-        public IActionResult Edit(EditTagRequest editTagRequest)
+        public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
             var tag = new Tag
             {
@@ -73,40 +73,32 @@ namespace Blogy_MVC.Controllers
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
-            var existingTag = _blogyDbContext.Tags.Find(tag.Id);
-            if (existingTag != null)
+            var updatedTag = await _tagRepository.UpdateAsync(tag);
+            if (updatedTag != null)
             {
-                existingTag.Name = tag.Name;
-                existingTag.DisplayName = tag.DisplayName;
-
-                // Save the changes
-                _blogyDbContext.SaveChanges();
-
+                updatedTag.Name = tag.Name;
+                updatedTag.DisplayName = tag.DisplayName;
                 //Show Success Message
-                return RedirectToAction("Edit", new { id = editTagRequest.Id });
+                 return RedirectToAction("List");
             }else
             {
             //Show Error Message
-              return RedirectToAction("Edit", new { id = editTagRequest.Id });
+             return NotFound();
            }  
         }
 
         [HttpPost]
         [ActionName("Delete")]
-        public IActionResult Delete(EditTagRequest editTagRequest)
+        public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
         {
-            var tag = _blogyDbContext.Tags.Find(editTagRequest.Id);
-            if (tag != null)
+            var deletedTag = await _tagRepository.DeleteAsync(editTagRequest.Id);
+            if (deletedTag != null)
             {
-                _blogyDbContext.Tags.Remove(tag);
-                _blogyDbContext.SaveChanges();
-            //show success message
-            return RedirectToAction("List");
+                //show success message
+                return RedirectToAction("List");
             }
-            
-            //show error message    
-           return RedirectToAction("List");
-
+               //show error message 
+                return NotFound(); 
         }
     }
 }

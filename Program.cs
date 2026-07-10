@@ -1,4 +1,5 @@
 using Blogy_MVC.Data;
+using Blogy_MVC.Repository;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BlogyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BlogyDbConnectionStrings"))
 );
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 var app = builder.Build();
 

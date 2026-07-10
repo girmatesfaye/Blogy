@@ -20,15 +20,5 @@ namespace Blogy_MVC.Models.Domain
      public ICollection<Tag> Tags { get; set; }
 
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
     }
 }

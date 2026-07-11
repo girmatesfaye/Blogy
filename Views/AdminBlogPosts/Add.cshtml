@@ -71,24 +71,22 @@
                             <input asp-for="Visible" class="form-check-input">
                             <label asp-for="Visible" class="form-check-label fw-semibold"></label>
                         </div>
-
+                        <div class="mb-4">
+                            <label class="form-label">Tags</label>
+                            <select class="form-select" asp-for="SelectedTags" asp-items="@Model.Tags"></select>
+                        </div>
                         <hr class="my-4">
-
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="List" class="btn btn-outline-secondary">
                                 Cancel
                             </a>
-
                             <button type="submit" class="btn btn-primary px-4">
                                 Publish Blog Post
                             </button>
                         </div>
-
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

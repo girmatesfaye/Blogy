@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blogy_MVC.Models.ViewModels
 {
-    public class AddBlogPostRequest
+    public class EditBlogPostRequest
     {
         public string Heading { get; set; }
         public string PageTitle { get; set; }

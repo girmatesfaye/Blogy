@@ -1,0 +1,37 @@
+@model List<Blogy_MVC.Models.Domain.BlogPost>;
+
+<div class="bg-primary bg-gradient text-white py-4 mb-4">
+    <div class="container">
+        <h2 class="mb-0">Blog list </h2>
+        <p class="mb-0 opacity-75">This is Admin Functionality.</p>
+    </div>
+</div>
+<div class="container mb-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>HEADING</td>
+                <td>TAGS</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var blogPost in Model)
+            {
+                <tr>
+                    <td>@blogPost.Id</td>
+                    <td>@blogPost.Heading</td>
+                    <td>
+                        <div class="d-flex">
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-secondary me-3">@tag.Name</span>
+                            }
+                        </div>
+                        <a asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

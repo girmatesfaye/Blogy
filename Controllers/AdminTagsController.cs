@@ -40,7 +40,7 @@ namespace Blogy_MVC.Controllers
         [ActionName("List")]
         public async Task<IActionResult> List()
         {
-            //use db context to get all tags from database
+            // Ask the TagRepository to ask the db and to get all tags from database
          var tags = await _tagRepository.GetAllAsync();
 
          return View(tags);

@@ -22,7 +22,9 @@ namespace Blogy_MVC.Repository
 
         public Task<BlogPost?> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            _blogyDbContext.BlogPosts.Remove(new BlogPost { Id = id });
+            _blogyDbContext.SaveChangesAsync();
+            return Task.FromResult<BlogPost?>(null);
         }
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
@@ -33,14 +35,14 @@ namespace Blogy_MVC.Repository
 
         public async Task<BlogPost?> GetAsync(Guid id)
         {
-          return await _blogyDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
+          return await _blogyDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
 
         }
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
             // Ask the DB to give the post to Edit and return back to the controller
-           var existingBlog = await _blogyDbContext.BlogPosts.FindAsync(blogPost.Id);
+           var existingBlog = await _blogyDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
            if(existingBlog != null)
             {
                 existingBlog.Heading = blogPost.Heading;

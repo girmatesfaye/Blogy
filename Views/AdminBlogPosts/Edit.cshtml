@@ -6,29 +6,84 @@
     </div>
 </div>
 
-
-
 <div class="container">
-    <form method="post" class="mt-4">
-        <div class="mb-3">
-            <label class="form-label">Heading</label>
-            <input type="text" class="form-control" id="heading" asp-for="Heading" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Page Title</label>
-            <input type="text" class="form-control" id="pageTitle" asp-for="Tags">
-        </div>
-        @* <div class="mb-3">
-            <label class="form-label">Author</label>
-            <input type="text" class="form-control" id="author" asp-for="Author">
-        </div> *@
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow border-0">
+                <div class="card-body p-5">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <div class="mb-4">
+                            <label asp-for="Id" class="form-label fw-semibold"></label>
+                            <input asp-for="Id" class="form-control form-control-lg" placeholder="ID" readonly>
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="Heading" class="form-label fw-semibold"></label>
+                            <input asp-for="Heading" class="form-control form-control-lg"
+                                   placeholder="Enter blog heading">
+                            <span asp-validation-for="Heading" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="PageTitle" class="form-label fw-semibold"></label>
+                            <input asp-for="PageTitle" class="form-control" placeholder="SEO page title">
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="ShortDescription" class="form-label fw-semibold"></label>
+                            <textarea asp-for="ShortDescription" class="form-control" rows="3"
+                                      placeholder="Write a short description"></textarea>
+                        </div>
 
-        <div class="flex gap-2">
-            <button type="submit" class="btn btn-secondary">Update</button>
-            @* <button type="submit" class="btn btn-danger" asp-controller="AdminTags" asp-action="Delete">
-                Delete
-            </button> *@
-        </div>
-    </form>
+                        <div class="mb-4">
+                            <label asp-for="Content" class="form-label fw-semibold"></label>
+                            <textarea asp-for="Content" class="form-control" rows="10"
+                                      placeholder="Write your blog content here..."></textarea>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="FeatureImageUrl" class="form-label fw-semibold"></label>
+                                <input asp-for="FeatureImageUrl" class="form-control"
+                                       placeholder="https://example.com/image.jpg">
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="UrlHandle" class="form-label fw-semibold"></label>
+                                <input asp-for="UrlHandle" class="form-control" placeholder="my-first-blog-post">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="PublishedDate" class="form-label fw-semibold"></label>
+                                <input asp-for="PublishedDate" type="date" class="form-control">
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Author" class="form-label fw-semibold"></label>
+                                <input asp-for="Author" class="form-control" placeholder="Author name">
+                            </div>
+                        </div>
+
+                        <div class="form-check form-switch mb-4">
+                            <input asp-for="Visible" class="form-check-input">
+                            <label asp-for="Visible" class="form-check-label fw-semibold"></label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Tags</label>
+                            <select class="form-select" asp-for="SelectedTags" asp-items="@Model.Tags"></select>
+                        </div>
+                        <hr class="my-4">
+                        <div class="flex gap-2">
+                            <button type="submit" class="btn btn-secondary">Update</button>
+                            <button type="submit" class="btn btn-danger" asp-controller="AdminBlogPosts"
+                                    asp-action="Delete">
+                                Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
